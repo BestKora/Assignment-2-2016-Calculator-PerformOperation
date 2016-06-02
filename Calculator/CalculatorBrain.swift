@@ -61,9 +61,11 @@ class CalculatorBrain{
     }
     
     func setOperand(variable: String) {
-        accumulator = variableValues[variable] ?? 0
-        descriptionAccumulator = variable
         internalProgram.append(variable)
+        if operations[variable] == nil {
+            operations[variable] = Operation.Variable(variable)
+        }
+        performOperation(variable)
     }
 
     
@@ -92,6 +94,7 @@ class CalculatorBrain{
     ]
     
     private enum Operation{
+        case Variable(String)
         case NullaryOperation(() -> Double,String)
         case Constant(Double)
         case UnaryOperation((Double) -> Double,(String) -> String)
@@ -104,6 +107,9 @@ class CalculatorBrain{
         internalProgram.append(symbol)
         if let operation = operations[symbol]{
             switch operation {
+            case .Variable(let variable):
+                accumulator = variableValues[variable] ?? 0
+                descriptionAccumulator = variable
             case .NullaryOperation(let function, let descriptionValue):
                 accumulator = function()
                 descriptionAccumulator = descriptionValue
@@ -150,14 +156,9 @@ class CalculatorBrain{
                     if let operand = op as? Double {
                         setOperand(operand)
                     } else if let symbol = op as? String {
-                        if operations[symbol] != nil {
-                             // symbol is an operation
+                        // symbol is an operation
                             performOperation(symbol)
-                        } else {
-                            // symbol is an variable
-                            setOperand(symbol)
-                        }
-
+                        
                     }
                 }
             }
@@ -179,6 +180,12 @@ class CalculatorBrain{
     }
     
     func clearVariables() {
+        for (key, value) in variableValues {
+            if operations[key] != nil {
+                operations.removeValueForKey(key)
+                print("key =\(key), value = \(value)")
+            }
+        }
         variableValues.removeAll()
     }
     
