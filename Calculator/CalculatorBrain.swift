@@ -61,10 +61,7 @@ class CalculatorBrain{
     }
     
     func setOperand(variable: String) {
-        internalProgram.append(variable)
-        if operations[variable] == nil {
-            operations[variable] = Operation.Variable(variable)
-        }
+        operations[variable] = Operation.Variable
         performOperation(variable)
     }
 
@@ -94,22 +91,22 @@ class CalculatorBrain{
     ]
     
     private enum Operation{
-        case Variable(String)
+        
+        case Variable
         case NullaryOperation(() -> Double,String)
         case Constant(Double)
         case UnaryOperation((Double) -> Double,(String) -> String)
         case BinaryOperation((Double, Double) -> Double, (String, String) -> String, Int)
         case Equals
-        
     }
     
     func performOperation(symbol: String){
         internalProgram.append(symbol)
         if let operation = operations[symbol]{
             switch operation {
-            case .Variable(let variable):
-                accumulator = variableValues[variable] ?? 0
-                descriptionAccumulator = variable
+            case .Variable:
+                accumulator = variableValues[symbol] ?? 0
+                descriptionAccumulator = symbol
             case .NullaryOperation(let function, let descriptionValue):
                 accumulator = function()
                 descriptionAccumulator = descriptionValue

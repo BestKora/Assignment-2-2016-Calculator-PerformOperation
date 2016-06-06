@@ -105,6 +105,7 @@ class ViewController: UIViewController {
         brain.clear()
         displayValue = nil
     }
+    
     @IBAction func backspace(sender: UIButton) {
         if userIsInTheMiddleOfTyping  {
             display.text!.removeAtIndex(display.text!.endIndex.predecessor())
