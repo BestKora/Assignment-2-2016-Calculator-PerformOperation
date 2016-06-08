@@ -472,21 +472,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="cos_1" destination="8NU-wf-vB9" id="NaC-gt-w2v"/>
                         <outlet property="display" destination="7U1-3u-3Sm" id="LDa-Ge-9nY"/>
                         <outlet property="history" destination="Eek-ND-7bp" id="rrc-5x-cjf"/>
-                        <outlet property="plusMinusButton" destination="cBy-Zp-N4x" id="aiu-fg-EsC"/>
-                        <outlet property="rand" destination="gLT-ba-dLa" id="TGQ-1b-uia"/>
-                        <outlet property="sin_1" destination="SE0-Td-SZx" id="ely-uT-zDM"/>
-                        <outlet property="stack0" destination="X0N-HR-hRc" id="pPe-Nq-A26"/>
-                        <outlet property="stack1" destination="eDE-Ee-zSJ" id="54B-8Q-tKd"/>
-                        <outlet property="stack2" destination="e9a-sj-Cpd" id="bAL-sX-ASm"/>
-                        <outlet property="stack3" destination="evh-5a-dYI" id="QKS-oG-qRf"/>
-                        <outlet property="stack4" destination="qY9-1o-k2j" id="Rft-Ch-h3P"/>
-                        <outlet property="stack5" destination="yoI-UX-lE6" id="czK-vR-YBb"/>
-                        <outlet property="stack6" destination="ec3-zD-ugL" id="qQi-a8-LqS"/>
-                        <outlet property="tan_1" destination="5yG-OG-mIt" id="nT3-Cm-bCB"/>
-                        <outlet property="x_2" destination="XgL-MS-hlq" id="FoW-AB-l3n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rLN-bj-k0B" sceneMemberID="firstResponder"/>
