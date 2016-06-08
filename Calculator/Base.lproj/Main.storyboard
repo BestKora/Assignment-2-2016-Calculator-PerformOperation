@@ -67,7 +67,7 @@
                                                         <rect key="frame" x="228" y="0.0" width="104" height="58"/>
                                                         <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
-                                                        <state key="normal" title="→X">
+                                                        <state key="normal" title="→M">
                                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -78,7 +78,7 @@
                                                         <rect key="frame" x="342" y="0.0" width="104" height="58"/>
                                                         <color key="backgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
-                                                        <state key="normal" title="X">
+                                                        <state key="normal" title="M">
                                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -416,7 +416,7 @@
                                                         <rect key="frame" x="114" y="0.0" width="104" height="58"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                        <state key="normal" title="0">
+                                                        <state key="normal" title=".">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -427,7 +427,7 @@
                                                         <rect key="frame" x="228" y="0.0" width="104" height="58"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                                        <state key="normal" title=".PO">
+                                                        <state key="normal" title="0">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -486,7 +486,6 @@
                         <outlet property="stack5" destination="yoI-UX-lE6" id="czK-vR-YBb"/>
                         <outlet property="stack6" destination="ec3-zD-ugL" id="qQi-a8-LqS"/>
                         <outlet property="tan_1" destination="5yG-OG-mIt" id="nT3-Cm-bCB"/>
-                        <outlet property="tochka" destination="Ece-ii-qhw" id="Bdq-Tu-vyW"/>
                         <outlet property="x_2" destination="XgL-MS-hlq" id="FoW-AB-l3n"/>
                     </connections>
                 </viewController>

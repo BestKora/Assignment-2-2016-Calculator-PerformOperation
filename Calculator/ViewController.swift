@@ -11,15 +11,11 @@ import UIKit
 class ViewController: UIViewController {
     @IBOutlet weak var history: UILabel!
     @IBOutlet private weak var display: UILabel!
-    @IBOutlet weak var tochka: UIButton!{
-        didSet {
-            tochka.setTitle(decimalSeparator, forState: UIControlState.Normal)
-        }
-    }
     
     private var userIsInTheMiddleOfTyping = false
     let decimalSeparator = formatter.decimalSeparator ?? "."
     
+//--------- Adaptive UI------------------
     @IBOutlet weak var stack0: UIStackView!
     @IBOutlet weak var stack1: UIStackView!
     @IBOutlet weak var stack2: UIStackView!
@@ -33,7 +29,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var tan_1: UIButton!
     @IBOutlet weak var x_2: UIButton!
     @IBOutlet weak var plusMinusButton: UIButton!
-    
     @IBOutlet weak var rand: UIButton!
     
     private lazy var buttonBlank:UIButton = {
@@ -42,8 +37,8 @@ class ViewController: UIViewController {
         button.setTitle("", forState: UIControlState.Normal)
         return button
     }()
+//-----------------------------------
 
-       
     @IBAction private func touchDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTyping {
@@ -53,14 +48,32 @@ class ViewController: UIViewController {
             if (digit !=  decimalSeparator) && ((display.text == "0") || (display.text == "-0"))
             { display.text = digit ; return }
             //--------------------------------------------------
-
-            if (digit != decimalSeparator) || (textCurrentlyInDisplay.rangeOfString(decimalSeparator) == nil) {
+      
+            if (digit != decimalSeparator) || (!textCurrentlyInDisplay.containsString(decimalSeparator)) {
                 display.text = textCurrentlyInDisplay + digit
             }
         } else {
             display.text = digit
         }
         userIsInTheMiddleOfTyping = true
+    }
+    private var resultValue: (Double, String?) {
+        get {
+            if let value = displayValue {
+            return (value,nil)
+            }
+             return (0.0,nil)
+        }
+        set {
+            let (result, error) = newValue
+            switch (result, error) {
+            case (_, nil) : displayValue = result
+            case (_, let error):
+                display.text = error
+                history.text = brain.description + (brain.isPartialResult ? " …" : " =")
+                userIsInTheMiddleOfTyping = false
+            }
+         }
     }
     
     private var displayValue: Double? {
@@ -96,7 +109,7 @@ class ViewController: UIViewController {
         if let mathematicalSymbol = sender.currentTitle{
             brain.performOperation(mathematicalSymbol)
         }
-        displayValue = brain.result
+        resultValue = brain.result
         
     }
     
@@ -111,11 +124,11 @@ class ViewController: UIViewController {
             display.text!.removeAtIndex(display.text!.endIndex.predecessor())
             if display.text!.isEmpty {
                 userIsInTheMiddleOfTyping  = false
-                displayValue = brain.result
+                resultValue = brain.result
             }
         } else {
             brain.undoLast()
-            displayValue = brain.result
+            resultValue = brain.result
         }
     }
     
@@ -137,16 +150,17 @@ class ViewController: UIViewController {
         let symbol = String((sender.currentTitle!).characters.dropFirst())
         if let value = displayValue {
             brain.setVariable(symbol, value: value)
-            displayValue = brain.result
+            resultValue = brain.result
         }
     }
     
 
     @IBAction func pushM(sender: UIButton) {
         brain.setOperand(sender.currentTitle!)
-        displayValue = brain.result
+        resultValue = brain.result
          }
     
+    //--------- Adaptive UI------------------
     override func willTransitionToTraitCollection(newCollection: UITraitCollection,
                      withTransitionCoordinator coordinator:UIViewControllerTransitionCoordinator) {
         
@@ -174,5 +188,6 @@ class ViewController: UIViewController {
             stack0.removeArrangedSubview(buttonBlank)
         }
     }
+//---------------------------------------------
 }
 
