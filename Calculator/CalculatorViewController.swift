@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalculatorViewController: UIViewController {
     @IBOutlet weak var history: UILabel!
     @IBOutlet private weak var display: UILabel!
     
@@ -60,9 +60,9 @@ class ViewController: UIViewController {
     private var resultValue: (Double, String?) {
         get {
             if let value = displayValue {
-            return (value,nil)
+                return (value,nil)
             }
-             return (0.0,nil)
+            return (0.0,"Error")
         }
         set {
             let (result, error) = newValue
