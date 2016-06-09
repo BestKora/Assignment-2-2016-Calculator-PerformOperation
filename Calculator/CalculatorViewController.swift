@@ -34,17 +34,12 @@ class CalculatorViewController: UIViewController {
         }
         userIsInTheMiddleOfTyping = true
     }
-    private var resultValue: (Double, String?) {
-        get {
-            if let value = displayValue {
-                return (value,nil)
-            }
-            return (0.0,"Error")
-        }
-        set {
-            let (result, error) = newValue
-            switch (result, error) {
-            case (_, nil) : displayValue = result
+    
+    private var resultValue: (Double, String?) = (0.0, nil) {
+        didSet {
+    
+            switch resultValue {
+            case (_, nil) : displayValue = resultValue.0
             case (_, let error):
                 display.text = error
                 history.text = brain.description + (brain.isPartialResult ? " …" : " =")
@@ -86,7 +81,6 @@ class CalculatorViewController: UIViewController {
             brain.performOperation(mathematicalSymbol)
         }
         resultValue = brain.result
-        
     }
     
     @IBAction func clearAll(sender: UIButton) {
@@ -125,8 +119,8 @@ class CalculatorViewController: UIViewController {
         userIsInTheMiddleOfTyping = false
         let symbol = String((sender.currentTitle!).characters.dropFirst())
         if let value = displayValue {
-            brain.setVariable(symbol, value: value)
-            resultValue = brain.result
+            brain.variableValues[symbol] = value
+             resultValue = brain.result
         }
     }
     
@@ -134,6 +128,6 @@ class CalculatorViewController: UIViewController {
     @IBAction func pushM(sender: UIButton) {
         brain.setOperand(sender.currentTitle!)
         resultValue = brain.result
-         }
+    }
 }
 

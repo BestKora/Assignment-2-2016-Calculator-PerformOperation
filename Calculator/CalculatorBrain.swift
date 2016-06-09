@@ -113,19 +113,22 @@ class CalculatorBrain{
                 accumulator = value
                 descriptionAccumulator = symbol
             case .UnaryOperation(let function, let descriptionFunction, let validator):
-                if let validatorUnary = validator {
-                    error = validatorUnary(accumulator)
-                }
+                error = validator?(accumulator)
                 accumulator = function(accumulator)
                 descriptionAccumulator = descriptionFunction(descriptionAccumulator)
+                
             case .BinaryOperation(let function, let descriptionFunction, let precedence, let validator):
                 executeBinaryOperation()
                 if currentPrecedence < precedence {
                     descriptionAccumulator = "(" + descriptionAccumulator + ")"
                 }
                 currentPrecedence = precedence
-                pending = PendingBinaryOperationInfo(binaryOperation: function, firstOperand: accumulator,
-                                                     descriptionFunction: descriptionFunction, descriptionOperand: descriptionAccumulator, validator: validator)
+                pending = PendingBinaryOperationInfo(binaryOperation: function,
+                                                     firstOperand: accumulator,
+                                                     descriptionFunction: descriptionFunction,
+                                                     descriptionOperand: descriptionAccumulator,
+                                                     
+                                                     validator: validator)
             case .Equals:
                 executeBinaryOperation()
             
@@ -134,13 +137,11 @@ class CalculatorBrain{
     }
     
     private func executeBinaryOperation(){
-        
-        if pending != nil{
-            if let validatorBinary = pending!.validator {
-                error = validatorBinary(pending!.firstOperand, accumulator)
-            }
+        if pending != nil {
+            error = pending!.validator?(pending!.firstOperand, accumulator)
             accumulator = pending!.binaryOperation(pending!.firstOperand, accumulator)
-                      descriptionAccumulator = pending!.descriptionFunction(pending!.descriptionOperand, descriptionAccumulator)
+            descriptionAccumulator = pending!.descriptionFunction(pending!.descriptionOperand,
+                                                                       descriptionAccumulator)
             pending = nil
         }
     }
@@ -168,31 +169,24 @@ class CalculatorBrain{
     }
     
     func undoLast() {
-        guard !internalProgram.isEmpty  else { clear();return }
+        guard !internalProgram.isEmpty else { clear();return }
         internalProgram.removeLast()
         program = internalProgram
     }
     
    func clear() {
         accumulator = 0.0
-        pending = nil
         error = nil
+        pending = nil
         descriptionAccumulator = " "
         currentPrecedence = Int.max
-        internalProgram .removeAll(keepCapacity: false)
+        internalProgram.removeAll(keepCapacity: false)
     }
     
     func clearVariables() {
         variableValues = [:]
     }
     
-    func getVariable(symbol: String) -> Double? {
-        return variableValues[symbol]
-    }
-    
-    func setVariable(symbol: String, value: Double) {
-        variableValues[symbol] = value
-    }
     
     private var pending: PendingBinaryOperationInfo?
     
