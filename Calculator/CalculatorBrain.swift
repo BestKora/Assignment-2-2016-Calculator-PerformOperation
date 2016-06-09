@@ -13,7 +13,7 @@ class CalculatorBrain{
     
     private var accumulator = 0.0
     private var internalProgram = [AnyObject]()
-    private var error:String?
+    private var error: String?
     
     var result: (Double, String?){
         get{
@@ -91,7 +91,6 @@ class CalculatorBrain{
     ]
     
     private enum Operation{
-        
         case Variable
         case NullaryOperation(() -> Double,String)
         case Constant(Double)
@@ -180,17 +179,11 @@ class CalculatorBrain{
         error = nil
         descriptionAccumulator = " "
         currentPrecedence = Int.max
-        internalProgram.removeAll()
+        internalProgram .removeAll(keepCapacity: false)
     }
     
     func clearVariables() {
-        for (key, value) in variableValues {
-            if operations[key] != nil {
-                operations.removeValueForKey(key)
-                print("key =\(key), value = \(value)")
-            }
-        }
-        variableValues.removeAll()
+        variableValues = [:]
     }
     
     func getVariable(symbol: String) -> Double? {
